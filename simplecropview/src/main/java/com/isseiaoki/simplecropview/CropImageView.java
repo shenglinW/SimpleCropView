@@ -1,5 +1,7 @@
 package com.isseiaoki.simplecropview;
 
+import com.github.siyamed.shapeimageview.path.SvgUtil;
+import com.github.siyamed.shapeimageview.path.parser.PathInfo;
 import com.isseiaoki.simplecropview.animation.SimpleValueAnimator;
 import com.isseiaoki.simplecropview.animation.SimpleValueAnimatorListener;
 import com.isseiaoki.simplecropview.animation.ValueAnimatorV14;
@@ -17,7 +19,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -2294,7 +2295,7 @@ public class CropImageView extends ImageView implements ScaleGestureDetector.OnS
     }
 
     private Path createStarPath(float width, float height) {
-        if(true) {
+        if(false) {
             float min = Math.min(width, height);
             float degreesPerStep = (float) Math.toRadians(360.0F / 5);
             float halfDegreesPerStep = degreesPerStep / 2;
@@ -2328,50 +2329,18 @@ public class CropImageView extends ImageView implements ScaleGestureDetector.OnS
             path.offset(0, (half - (float) (radius * Math.cos(halfDegreesPerStep))) / 2);
             return path;
         } else {
-            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.singlestar);
-            Bitmap src = Bitmap.createScaledBitmap(bmp, (int) width, (int) height, false);
-            if (bmp != null) {
-                bmp.recycle();
-            }
-
-            Path path = getPathFromBitmap(src);
-            if (src != null) {
-                src.recycle();
-            }
+            Path path = new Path();
+            PathInfo pathInfo = SvgUtil.readSvg(getContext(), R.raw.imgview_star);
+            Matrix pathMatrix = new Matrix();
+            float scale = Math.min(width / pathInfo.getWidth(), height / pathInfo.getHeight());
+            float translateX = Math.round((width - pathInfo.getWidth() * scale) * 0.5f);
+            float translateY = Math.round((height - pathInfo.getHeight() * scale) * 0.5f);
+            pathMatrix.setScale(scale, scale);
+            pathMatrix.postTranslate(translateX, translateY);
+            pathInfo.transform(pathMatrix, path);
+            path.close();
             return path;
-
         }
-    }
-
-    /**
-     * get the path from a mask bitmap
-     *
-     * @param mask
-     * @return
-     */
-    private Path getPathFromBitmap(Bitmap mask) {
-        Path path = new Path();
-        int bWidth = mask.getWidth();
-        int bHeight = mask.getHeight();
-        int[] origin = new int[bWidth];
-        int lastA;
-        for (int i = 0; i < bHeight; i++) {
-            mask.getPixels(origin, 0, bWidth, 0, i, bWidth, 1);
-            lastA = 0;
-            for (int j = 0; j < bWidth; j++) {
-                int a = Color.alpha(origin[j]);
-                if (a != 0 && lastA == 0) {
-                    path.moveTo(j, i);
-                } else if (a == 0 && lastA != 0) {
-                    path.lineTo(j - 1, i);
-                } else if (a != 0 && j == bWidth - 1) {
-                    path.lineTo(j, i);
-                }
-                lastA = a;
-            }
-        }
-        path.close();
-        return path;
     }
 
     private Path createHeartPath(float width, float height) {

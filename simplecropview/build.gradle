@@ -18,6 +18,10 @@ android {
     }
 }
 
+dependencies {
+    compile group: 'net.sf.kxml', name: 'kxml2', version:'2.3.0'
+}
+
 def file = project.rootProject.file('local.properties')
 if(!file.exists())return
 
