@@ -26,24 +26,24 @@
 
     <com.isseiaoki.simplecropview.CropImageView
             android:id="@+id/cropImageView"
-            android:layout_weight="1"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            custom:scv_crop_mode="fit_image"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"
+            custom:scv_crop_mode="circle"
             custom:scv_background_color="@color/windowBackground"
             custom:scv_handle_color="@color/colorAccent"
             custom:scv_guide_color="@color/colorAccent"
             custom:scv_overlay_color="@color/overlay"
             custom:scv_frame_color="@color/colorAccent"
-            custom:scv_handle_size="14dp"
+            custom:scv_handle_size="8dp"
             custom:scv_touch_padding="8dp"
             custom:scv_handle_show_mode="show_always"
-            custom:scv_guide_show_mode="show_always"
-            custom:scv_min_frame_size="50dp"
+            custom:scv_guide_show_mode="not_show"
+            custom:scv_min_frame_size="36dp"
             custom:scv_frame_stroke_weight="1dp"
             custom:scv_guide_stroke_weight="1dp"
             />
@@ -68,6 +68,26 @@
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
                 android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonShowStar"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:padding="4dp"
+                android:text="STAR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/AppTheme.Button.Borderless"/>
+
+            <Button
+                android:id="@+id/buttonHeart"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:padding="4dp"
+                android:text="HEART"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/AppTheme.Button.Borderless"/>
 
             <Button
                     android:id="@+id/buttonFitImage"
@@ -165,6 +185,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/AppTheme.Button.Borderless"/>
+
 
         </LinearLayout>
     </HorizontalScrollView>

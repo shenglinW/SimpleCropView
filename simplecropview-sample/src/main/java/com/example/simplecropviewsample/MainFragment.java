@@ -18,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,9 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class MainFragment extends Fragment {
+
+    private static final String TAG = MainFragment.class.getSimpleName();
+
     private static final int REQUEST_PICK_IMAGE = 10011;
     private static final int REQUEST_SAF_PICK_IMAGE = 10012;
     private static final String PROGRESS_DIALOG = "ProgressDialog";
@@ -74,6 +78,7 @@ public class MainFragment extends Fragment {
         if (mCropView.getImageBitmap() == null) {
             mCropView.setImageResource(R.drawable.sample5);
         }
+        mCropView.setCropMode(CropImageView.CropMode.CIRCLE);
     }
 
     @Override
@@ -112,6 +117,8 @@ public class MainFragment extends Fragment {
         view.findViewById(R.id.buttonCustom).setOnClickListener(btnListener);
         view.findViewById(R.id.buttonCircle).setOnClickListener(btnListener);
         view.findViewById(R.id.buttonShowCircleButCropAsSquare).setOnClickListener(btnListener);
+        view.findViewById(R.id.buttonShowStar).setOnClickListener(btnListener);
+        view.findViewById(R.id.buttonHeart).setOnClickListener(btnListener);
         mRootLayout = (LinearLayout) view.findViewById(R.id.layout_root);
     }
 
@@ -223,6 +230,12 @@ public class MainFragment extends Fragment {
                 case R.id.buttonShowCircleButCropAsSquare:
                     mCropView.setCropMode(CropImageView.CropMode.CIRCLE_SQUARE);
                     break;
+                case R.id.buttonShowStar:
+                    mCropView.setCropMode(CropImageView.CropMode.STAR);
+                    break;
+                case R.id.buttonHeart:
+                    mCropView.setCropMode(CropImageView.CropMode.HEART);
+                    break;
                 case R.id.buttonRotateLeft:
                     mCropView.rotateImage(CropImageView.RotateDegrees.ROTATE_M90D);
                     break;
@@ -253,6 +266,7 @@ public class MainFragment extends Fragment {
     private final CropCallback mCropCallback = new CropCallback() {
         @Override
         public void onSuccess(Bitmap cropped) {
+            Log.d(TAG, "w " + cropped.getWidth() + " h " + cropped.getHeight());
         }
 
         @Override

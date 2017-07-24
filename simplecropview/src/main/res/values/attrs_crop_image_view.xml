@@ -13,6 +13,8 @@
             <enum name="custom" value="7"/>
             <enum name="circle" value="8"/>
             <enum name="circle_square" value="9"/>
+            <enum name="star" value="10"/>
+            <enum name="heart" value="11"/>
         </attr>
         <attr name="scv_background_color" format="reference|color"/>
         <attr name="scv_overlay_color" format="reference|color"/>
